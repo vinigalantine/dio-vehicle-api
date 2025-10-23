@@ -1,0 +1,15 @@
+P:\Projects\dio-vehicle-api\src\DioVehicleApi.Application\bin\Debug\net9.0\DioVehicleApi.Application.deps.json
+P:\Projects\dio-vehicle-api\src\DioVehicleApi.Application\bin\Debug\net9.0\DioVehicleApi.Application.dll
+P:\Projects\dio-vehicle-api\src\DioVehicleApi.Application\bin\Debug\net9.0\DioVehicleApi.Application.pdb
+P:\Projects\dio-vehicle-api\src\DioVehicleApi.Application\bin\Debug\net9.0\DioVehicleApi.Domain.dll
+P:\Projects\dio-vehicle-api\src\DioVehicleApi.Application\bin\Debug\net9.0\DioVehicleApi.Domain.pdb
+P:\Projects\dio-vehicle-api\src\DioVehicleApi.Application\obj\Debug\net9.0\DioVehicleApi.Application.csproj.AssemblyReference.cache
+P:\Projects\dio-vehicle-api\src\DioVehicleApi.Application\obj\Debug\net9.0\DioVehicleApi.Application.GeneratedMSBuildEditorConfig.editorconfig
+P:\Projects\dio-vehicle-api\src\DioVehicleApi.Application\obj\Debug\net9.0\DioVehicleApi.Application.AssemblyInfoInputs.cache
+P:\Projects\dio-vehicle-api\src\DioVehicleApi.Application\obj\Debug\net9.0\DioVehicleApi.Application.AssemblyInfo.cs
+P:\Projects\dio-vehicle-api\src\DioVehicleApi.Application\obj\Debug\net9.0\DioVehicleApi.Application.csproj.CoreCompileInputs.cache
+P:\Projects\dio-vehicle-api\src\DioVehicleApi.Application\obj\Debug\net9.0\DioVehic.0DA60D15.Up2Date
+P:\Projects\dio-vehicle-api\src\DioVehicleApi.Application\obj\Debug\net9.0\DioVehicleApi.Application.dll
+P:\Projects\dio-vehicle-api\src\DioVehicleApi.Application\obj\Debug\net9.0\refint\DioVehicleApi.Application.dll
+P:\Projects\dio-vehicle-api\src\DioVehicleApi.Application\obj\Debug\net9.0\DioVehicleApi.Application.pdb
+P:\Projects\dio-vehicle-api\src\DioVehicleApi.Application\obj\Debug\net9.0\ref\DioVehicleApi.Application.dll
