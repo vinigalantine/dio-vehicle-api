@@ -1,8 +1,11 @@
 using System.Text;
+using DioVehicleApi.Api;
+using DioVehicleApi.Application.Configuration;
 using DioVehicleApi.Domain.Services;
 using DioVehicleApi.Infrastructure;
+using DioVehicleApi.Infrastructure.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Components.Web;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
@@ -14,6 +17,11 @@ var jwtSettings = builder.Configuration.GetSection(JwtSettings.SectionName).Get<
 
 if (jwtSettings == null)
     throw new InvalidOperationException("JWT settings are not configured properly.");
+
+builder.Services.AddHttpContextAccessor();
+
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme) 
                 .AddJwtBearer(options =>
@@ -86,6 +94,8 @@ if (app.Environment.IsDevelopment() ||
 }
 
 app.UseHttpsRedirection();
+
+app.UseMiddleware<JwtAuthenticationMiddleware>();
 
 app.UseAuthentication();
 app.UseAuthorization();
