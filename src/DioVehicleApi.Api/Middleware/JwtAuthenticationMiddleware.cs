@@ -63,7 +63,7 @@ public class JwtAuthenticationMiddleware
 
             context.User = principal;
 
-            _logger.LogInformation($"JWT token validated successfully for user: {principal.FindFirst("username")?.Value}");
+            _logger.LogInformation("JWT token validated successfully for user: {Username}", principal.FindFirst("username")?.Value);
         }
         catch (SecurityTokenExpiredException)
         {

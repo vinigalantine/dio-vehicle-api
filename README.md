@@ -1,6 +1,6 @@
 # DIO Vehicle API
 
-This is a simple portifolio project to showcase my knowledge in OOP, DDD, .NET, EntityFramework, Docker and others.
+This is a simple portfolio project to showcase my knowledge in OOP, DDD, .NET, EntityFramework, Docker and others.
 
 Also an activity for the DIO course that I'm doing. Later I'll document it more.
 
