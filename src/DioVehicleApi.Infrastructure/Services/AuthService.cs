@@ -1,6 +1,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using DioVehicleApi.Application.Configuration;
 using DioVehicleApi.Domain.Services;
 using DioVehicleApi.Domain.ValueObjects;
 using Microsoft.Extensions.Options;

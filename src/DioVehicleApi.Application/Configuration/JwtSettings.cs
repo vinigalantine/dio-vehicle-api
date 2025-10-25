@@ -1,4 +1,4 @@
-namespace DioVehicleApi.Infrastructure;
+namespace DioVehicleApi.Application.Configuration;
 
 public class JwtSettings
 {
