@@ -1,11 +1,9 @@
 using System.Text;
 using DioVehicleApi.Api;
 using DioVehicleApi.Application.Configuration;
-using DioVehicleApi.Domain.Services;
 using DioVehicleApi.Infrastructure;
 using DioVehicleApi.Infrastructure.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
@@ -20,8 +18,7 @@ if (jwtSettings == null)
 
 builder.Services.AddHttpContextAccessor();
 
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddInfrastructure(builder.Configuration);
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme) 
                 .AddJwtBearer(options =>
@@ -39,7 +36,6 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 });
 
 builder.Services.AddAuthorization();
-builder.Services.AddScoped<IAuthService, AuthService>();
 
 builder.Services.AddControllers();
 
@@ -79,6 +75,14 @@ builder.Services.AddSwaggerGen(swaggerGenOptions =>
 });
 
 var app = builder.Build();
+
+// Just a simple seeding for users, could have been done on the migrations 😬
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    var passwordHasher = scope.ServiceProvider.GetRequiredService<DioVehicleApi.Domain.Services.IPasswordHasher>();
+    await DatabaseSeeder.SeedAsync(context, passwordHasher);
+}
 
 // Configure Swagger based on environment
 if (app.Environment.IsDevelopment() || 

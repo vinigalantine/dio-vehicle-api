@@ -1,4 +1,5 @@
 using DioVehicleApi.Domain.Entities;
+using DioVehicleApi.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -15,6 +16,13 @@ public abstract class BaseEntityConfiguration<TEntity, TKey> : IEntityTypeConfig
         builder.Property(e => e.CreatedBy).IsRequired().HasMaxLength(256);
         builder.Property(e => e.UpdatedAt).IsRequired(false);
         builder.Property(e => e.UpdatedBy).HasMaxLength(256);
+        
+        // Configure soft delete properties if entity implements ISoftDeletable
+        if (typeof(ISoftDeletable).IsAssignableFrom(typeof(TEntity)))
+        {
+            builder.Property("DeletedBy").IsRequired(false).HasMaxLength(256);
+            builder.Property("DeletedAt").IsRequired(false);
+        }
         
         ConfigureEntity(builder);
     }

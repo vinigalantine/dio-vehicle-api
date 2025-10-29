@@ -13,25 +13,5 @@ public class Model : BaseEntity<Guid>, ISoftDeletable
     
     public bool IsDeleted { get; set; }
     public DateTime? DeletedAt { get; set; }
-    public string DeletedBy { get; set; } = string.Empty;
-
-    public Model() 
-    { 
-        Id = Guid.NewGuid();
-    }
-
-    public Model(string name, Guid brandId)
-    {
-        Id = Guid.NewGuid();
-        Name = name;
-        BrandId = brandId;
-    }
-
-    public Model(string name, Brand brand)
-    {
-        Id = Guid.NewGuid();
-        Name = name;
-        Brand = brand;
-        BrandId = brand.Id;
-    }
+    public string? DeletedBy { get; set; }
 }

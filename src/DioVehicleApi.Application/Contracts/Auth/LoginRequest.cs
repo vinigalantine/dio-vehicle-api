@@ -1,3 +1,3 @@
-namespace DioVehicleApi.Application.DTOs;
+namespace DioVehicleApi.Application.Contracts.Auth;
 
 public record LoginRequest(string Username, string Password);
