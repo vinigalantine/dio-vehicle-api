@@ -20,6 +20,7 @@ public abstract class BaseEntityConfiguration<TEntity, TKey> : IEntityTypeConfig
         // Configure soft delete properties if entity implements ISoftDeletable
         if (typeof(ISoftDeletable).IsAssignableFrom(typeof(TEntity)))
         {
+            builder.Property("IsDeleted").IsRequired();
             builder.Property("DeletedBy").IsRequired(false).HasMaxLength(256);
             builder.Property("DeletedAt").IsRequired(false);
         }

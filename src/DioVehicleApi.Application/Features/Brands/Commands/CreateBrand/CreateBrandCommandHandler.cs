@@ -1,4 +1,5 @@
 using DioVehicleApi.Domain.Entities;
+using DioVehicleApi.Domain.Exceptions;
 using DioVehicleApi.Domain.Interfaces.Repositories;
 using MediatR;
 
@@ -18,6 +19,11 @@ public class CreateBrandCommandHandler : IRequestHandler<CreateBrandCommand, Bra
 
     public async Task<Brand> Handle(CreateBrandCommand request, CancellationToken cancellationToken)
     {
+        if (await _brandRepository.ExistsByNameAsync(request.Name, cancellationToken))
+        {
+            throw new ConflictException($"A brand with name '{request.Name}' already exists.");
+        }
+
         var brand = new Brand
         {
             Id = Guid.NewGuid(),

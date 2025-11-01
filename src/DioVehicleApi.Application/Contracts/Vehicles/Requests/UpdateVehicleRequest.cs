@@ -1,4 +1,4 @@
-namespace DioVehicleApi.Application.Contracts.Vehicle;
+namespace DioVehicleApi.Application.Contracts.Vehicles;
 
 /// <summary>
 /// Request for updating a vehicle

@@ -16,9 +16,9 @@ var jwtSettings = builder.Configuration.GetSection(JwtSettings.SectionName).Get<
 if (jwtSettings == null)
     throw new InvalidOperationException("JWT settings are not configured properly.");
 
-builder.Services.AddHttpContextAccessor();
-
 builder.Services.AddInfrastructure(builder.Configuration);
+
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme) 
                 .AddJwtBearer(options =>
@@ -77,11 +77,14 @@ builder.Services.AddSwaggerGen(swaggerGenOptions =>
 var app = builder.Build();
 
 // Just a simple seeding for users, could have been done on the migrations 😬
-using (var scope = app.Services.CreateScope())
+if (!builder.Configuration.GetValue<bool>("IsTest", false))
 {
-    var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-    var passwordHasher = scope.ServiceProvider.GetRequiredService<DioVehicleApi.Domain.Services.IPasswordHasher>();
-    await DatabaseSeeder.SeedAsync(context, passwordHasher);
+    using (var scope = app.Services.CreateScope())
+    {
+        var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+        var passwordHasher = scope.ServiceProvider.GetRequiredService<DioVehicleApi.Domain.Services.IPasswordHasher>();
+        await DatabaseSeeder.SeedAsync(context, passwordHasher);
+    }
 }
 
 // Configure Swagger based on environment
@@ -107,3 +110,6 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+// Make Program class accessible to test projects
+public partial class Program { }

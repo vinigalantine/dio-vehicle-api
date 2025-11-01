@@ -8,6 +8,7 @@ using DioVehicleApi.Application.Features.Brands.Queries.GetAllBrands;
 using DioVehicleApi.Application.Features.Brands.Queries.GetBrand;
 using DioVehicleApi.Domain.Exceptions;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,6 +16,7 @@ namespace DioVehicleApi.Api.Controllers;
 
 [Route("api/brands")]
 [ApiController]
+[Authorize]
 public class BrandController : ControllerBase
 {
     private readonly ILogger<BrandController> _logger;
@@ -116,6 +118,12 @@ public class BrandController : ControllerBase
     {
         try
         {
+            if (string.IsNullOrWhiteSpace(request.Name))
+            {
+                _logger.LogWarning("CreateBrand called with empty or null name.");
+                return BadRequest(new { message = "Name is required." });
+            }
+
             var command = new CreateBrandCommand
             {
                 Name = request.Name,
@@ -135,11 +143,10 @@ public class BrandController : ControllerBase
             _logger.LogInformation("Brand created successfully: {BrandId} - {BrandName}", brand.Id, brand.Name);
             return CreatedAtAction(nameof(GetBrand), new { id = brand.Id }, response);
         }
-        catch (DbUpdateException ex) when (ex.InnerException?.Message.Contains("duplicate key") == true 
-                                          || ex.InnerException?.Message.Contains("IX_Brands_Name") == true)
+        catch (ConflictException ex)
         {
             _logger.LogWarning(ex, "Attempt to create brand with duplicate name: {BrandName}", request.Name);
-            return Conflict(new { message = $"A brand with name '{request.Name}' already exists." });
+            return Conflict(new { message = ex.Message });
         }
         catch (Exception ex)
         {

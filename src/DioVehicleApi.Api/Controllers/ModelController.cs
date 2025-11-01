@@ -1,6 +1,6 @@
 using DioVehicleApi.Api.Constants;
 using DioVehicleApi.Application.Contracts.Base;
-using DioVehicleApi.Application.Contracts.Model;
+using DioVehicleApi.Application.Contracts.Models;
 using DioVehicleApi.Application.Features.Models.Commands.CreateModel;
 using DioVehicleApi.Application.Features.Models.Commands.DeleteModel;
 using DioVehicleApi.Application.Features.Models.Commands.UpdateModel;
@@ -8,6 +8,7 @@ using DioVehicleApi.Application.Features.Models.Queries.GetAllModels;
 using DioVehicleApi.Application.Features.Models.Queries.GetModel;
 using DioVehicleApi.Domain.Exceptions;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,6 +16,7 @@ namespace DioVehicleApi.Api.Controllers;
 
 [Route("api/models")]
 [ApiController]
+[Authorize]
 public class ModelController : ControllerBase
 {
     private readonly ILogger<ModelController> _logger;

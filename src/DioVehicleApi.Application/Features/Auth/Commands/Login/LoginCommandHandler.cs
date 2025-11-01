@@ -5,6 +5,7 @@ using DioVehicleApi.Application.Configuration;
 using DioVehicleApi.Domain.Interfaces.Repositories;
 using DioVehicleApi.Domain.Services;
 using MediatR;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
@@ -18,15 +19,18 @@ public class LoginCommandHandler : IRequestHandler<LoginCommand, LoginResponse?>
     private readonly IUserRepository _userRepository;
     private readonly IPasswordHasher _passwordHasher;
     private readonly JwtSettings _jwtSettings;
+    private readonly ILogger<LoginCommandHandler> _logger;
 
     public LoginCommandHandler(
         IUserRepository userRepository, 
         IPasswordHasher passwordHasher,
-        IOptions<JwtSettings> jwtSettings)
+        IOptions<JwtSettings> jwtSettings,
+        ILogger<LoginCommandHandler> logger)
     {
         _userRepository = userRepository;
         _passwordHasher = passwordHasher;
         _jwtSettings = jwtSettings.Value;
+        _logger = logger;
     }
 
     public async Task<LoginResponse?> Handle(LoginCommand request, CancellationToken cancellationToken)

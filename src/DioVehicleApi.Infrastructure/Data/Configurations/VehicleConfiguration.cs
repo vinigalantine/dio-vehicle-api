@@ -14,9 +14,11 @@ public class VehicleConfiguration : BaseEntityConfiguration<Vehicle, Guid>
             .IsRequired();
         
         builder.Property(e => e.Color)
+            .IsRequired()
             .HasMaxLength(50);
         
         builder.Property(e => e.LicensePlate)
+            .IsRequired()
             .HasMaxLength(20);
         
         builder.Property(e => e.Year)

@@ -13,6 +13,12 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
+        // Skip infrastructure setup in tests
+        if (configuration.GetValue<bool>("IsTest", false))
+        {
+            return services;
+        }
+
         // Database
         services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));

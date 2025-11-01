@@ -1,4 +1,4 @@
-namespace DioVehicleApi.Application.Contracts.Vehicle;
+namespace DioVehicleApi.Application.Contracts.Vehicles;
 
 public record VehicleResponse
 {
