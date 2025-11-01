@@ -14,16 +14,15 @@ public class VehicleConfiguration : BaseEntityConfiguration<Vehicle, Guid>
             .IsRequired();
         
         builder.Property(e => e.Color)
+            .IsRequired()
             .HasMaxLength(50);
         
         builder.Property(e => e.LicensePlate)
+            .IsRequired()
             .HasMaxLength(20);
         
         builder.Property(e => e.Year)
             .IsRequired();
-        
-        builder.Property(e => e.DeletedBy)
-            .HasMaxLength(256);
         
         builder.HasOne(e => e.Model)
             .WithMany(e => e.Vehicles)
@@ -34,10 +33,5 @@ public class VehicleConfiguration : BaseEntityConfiguration<Vehicle, Guid>
                .IsUnique()
                .HasFilter("[LicensePlate] IS NOT NULL AND [IsDeleted] = 0");
         
-        builder.HasIndex(e => new { e.ModelId, e.Year })
-            .HasDatabaseName("IX_Vehicles_ModelId_Year");
-        
-        builder.HasIndex(e => e.IsDeleted)
-            .HasDatabaseName("IX_Vehicles_IsDeleted");
     }
 }

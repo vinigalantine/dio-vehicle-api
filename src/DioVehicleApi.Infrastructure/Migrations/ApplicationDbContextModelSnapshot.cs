@@ -40,8 +40,8 @@ namespace DioVehicleApi.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DeletedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -88,8 +88,8 @@ namespace DioVehicleApi.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DeletedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -115,6 +115,61 @@ namespace DioVehicleApi.Infrastructure.Migrations
                     b.ToTable("Models", (string)null);
                 });
 
+            modelBuilder.Entity("DioVehicleApi.Domain.Entities.User", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeletedBy")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<bool>("IsAdmin")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasMaxLength(512)
+                        .HasColumnType("nvarchar(512)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Username")
+                        .IsUnique()
+                        .HasDatabaseName("IX_Users_Username");
+
+                    b.ToTable("Users", (string)null);
+                });
+
             modelBuilder.Entity("DioVehicleApi.Domain.Entities.Vehicle", b =>
                 {
                     b.Property<Guid>("Id")
@@ -138,7 +193,6 @@ namespace DioVehicleApi.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DeletedBy")
-                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
@@ -165,15 +219,11 @@ namespace DioVehicleApi.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IsDeleted")
-                        .HasDatabaseName("IX_Vehicles_IsDeleted");
-
                     b.HasIndex("LicensePlate")
                         .IsUnique()
                         .HasFilter("[LicensePlate] IS NOT NULL AND [IsDeleted] = 0");
 
-                    b.HasIndex("ModelId", "Year")
-                        .HasDatabaseName("IX_Vehicles_ModelId_Year");
+                    b.HasIndex("ModelId");
 
                     b.ToTable("Vehicles", (string)null);
                 });
